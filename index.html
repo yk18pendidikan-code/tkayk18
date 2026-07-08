@@ -35,20 +35,20 @@
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
-      position: sticky; top: 0; z-index: 1000; padding: 15px 0;
+      position: sticky; top: 0; z-index: 1000; padding: 12px 0;
       box-shadow: 0 4px 20px rgba(0,0,0,0.03);
     }
     
-    .logo-img { height: 45px; width: auto; object-fit: contain; }
+    .logo-img { height: 40px; width: auto; object-fit: contain; }
 
     .btn-leaderboard-nav {
       background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      color: #fff; border: none; padding: 10px 20px; border-radius: var(--radius-md);
-      font-size: 14px; font-weight: 700; box-shadow: 0 4px 15px -3px rgba(193,18,31,0.3); transition: all 0.3s ease;
+      color: #fff; border: none; padding: 10px 16px; border-radius: var(--radius-md);
+      font-size: 13px; font-weight: 700; box-shadow: 0 4px 15px -3px rgba(193,18,31,0.3); transition: all 0.3s ease;
     }
     .btn-leaderboard-nav:hover { transform: translateY(-2px); box-shadow: 0 6px 20px -3px rgba(193,18,31,0.4); color: #fff; }
 
-    .controls-wrapper { background: var(--surface); border-radius: var(--radius-lg); padding: 25px; border: 1px solid var(--border); box-shadow: 0 10px 30px -5px rgb(0 0 0 / 0.03); margin-bottom: 30px; }
+    .controls-wrapper { background: var(--surface); border-radius: var(--radius-lg); padding: 20px; border: 1px solid var(--border); box-shadow: 0 10px 30px -5px rgb(0 0 0 / 0.03); margin-bottom: 25px; }
 
     .search-box { position: relative; }
     .search-box i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
@@ -58,123 +58,135 @@
     }
     .search-input:focus { background-color: var(--surface); border-color: var(--primary); box-shadow: 0 0 0 4px rgba(193, 18, 31, 0.1); outline: none; }
 
-    .btn-toggle-group { background: #f1f5f9; padding: 6px; border-radius: var(--radius-md); display: inline-flex; width: 100%; }
-    .btn-toggle-mode { flex: 1; border: none; padding: 10px 14px; border-radius: 10px; font-size: 13px; font-weight: 700; transition: all 0.2s ease; background: transparent; color: var(--text-muted); }
+    .btn-toggle-group { background: #f1f5f9; padding: 5px; border-radius: var(--radius-md); display: inline-flex; width: 100%; }
+    .btn-toggle-mode { flex: 1; border: none; padding: 10px; border-radius: 10px; font-size: 13px; font-weight: 700; transition: all 0.2s ease; background: transparent; color: var(--text-muted); }
     .btn-toggle-mode.active { background: var(--surface); color: var(--primary); box-shadow: 0 4px 12px rgb(0 0 0 / 0.05); }
 
-    .cabang-banner { background: linear-gradient(135deg, #f0f9ff, #ffffff); border: 1px solid #bae0fd; border-radius: var(--radius-md); padding: 12px 16px; font-size: 13px; font-weight: 700; color: var(--blue-dark); display: flex; align-items: center; gap: 8px; margin-top: 15px; }
+    .cabang-banner { background: linear-gradient(135deg, #f0f9ff, #ffffff); border: 1px solid #bae0fd; border-radius: var(--radius-md); padding: 12px; font-size: 13px; font-weight: 700; color: var(--blue-dark); display: flex; align-items: center; gap: 8px; margin-top: 15px; }
 
-    .student-card { background: var(--surface); border-radius: var(--radius-lg); padding: 25px; border: 1px solid var(--border); cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); height: 100%; position: relative; display: flex; flex-direction: column; justify-content: center; }
+    .student-card { background: var(--surface); border-radius: var(--radius-lg); padding: 20px; border: 1px solid var(--border); cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); height: 100%; position: relative; display: flex; flex-direction: column; justify-content: center; }
     .student-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 15px 30px -5px rgb(193 18 31 / 0.1); }
     
-    .rank-pill { position: absolute; top: -12px; right: 20px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #fff; font-size: 12px; font-weight: 800; padding: 6px 14px; border-radius: 20px; box-shadow: 0 4px 10px -3px rgba(193,18,31,0.5); border: 2px solid #fff; }
-    .rank-pill.top3 { background: linear-gradient(135deg, #d4a017, #a87908); box-shadow: 0 4px 10px -3px rgba(212,160,23,0.5); }
+    .rank-pill { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #fff; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 20px; border: 2px solid #fff; width: fit-content; }
+    .rank-pill.top3 { background: linear-gradient(135deg, #d4a017, #a87908); }
 
-    .session-card { background: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--border); padding: 25px; margin-bottom: 25px; box-shadow: 0 4px 15px rgb(0 0 0 / 0.02); }
-    .session-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed var(--border); padding-bottom: 20px; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
+    .session-card { background: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--border); padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 15px rgb(0 0 0 / 0.02); }
+    .session-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed var(--border); padding-bottom: 15px; margin-bottom: 15px; flex-wrap: wrap; gap: 12px; }
 
-    .score-chip { background: #f8fafc; border: 1px solid var(--border); padding: 10px 16px; border-radius: var(--radius-md); font-size: 13px; font-weight: 600; color: var(--text-muted); }
-    .score-chip .val { color: var(--text-main); font-weight: 800; margin-left: 6px; font-size: 14px; }
+    .score-chip { background: #f8fafc; border: 1px solid var(--border); padding: 8px 12px; border-radius: var(--radius-md); font-size: 12px; font-weight: 600; color: var(--text-muted); }
+    .score-chip .val { color: var(--text-main); font-weight: 800; margin-left: 4px; font-size: 13px; }
     .score-chip.highlight { background: #fff1f2; border-color: #fecaca; }
     .score-chip.highlight .val { color: var(--primary); }
 
     .table-clean { width: 100%; font-size: 13px; margin-bottom: 0; border-collapse: separate; border-spacing: 0; }
-    .table-clean th { background: #f8fafc; font-weight: 700; color: var(--text-main); padding: 12px; text-align: center; border-bottom: 2px solid var(--border); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
-    .table-clean td { padding: 12px; text-align: center; border-bottom: 1px solid var(--border); background: var(--surface); font-weight: 600; }
+    .table-clean th { background: #f8fafc; font-weight: 700; color: var(--text-main); padding: 12px 10px; text-align: center; border-bottom: 2px solid var(--border); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+    .table-clean td { padding: 12px 10px; text-align: center; border-bottom: 1px solid var(--border); background: var(--surface); font-weight: 600; }
     .table-clean tbody tr:last-child td { border-bottom: none; }
-    .table-clean tbody tr:hover td { background: #f8fafc; }
+    
+    .text-above-avg { color: #166534 !important; font-weight: 700; }
+    .text-below-avg { color: #b91c1c !important; font-weight: 700; }
 
-    .badge-kat { padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; display: inline-block; }
+    .badge-kat { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; display: inline-block; }
     .kat-istimewa { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
     .kat-sangat-baik { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
     .kat-baik { background: #e0f2fe; color: #0369a1; border: 1px solid #bae0fd; }
     .kat-cukup { background: #fef9c3; color: #854d0e; border: 1px solid #fef08a; }
     .kat-kurang { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
 
-    .chart-card { background: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--border); padding: 25px; margin-bottom: 30px; }
-    .chart-filter-select { max-width: 250px; border-radius: var(--radius-md); font-size: 13px; font-weight: 600; padding: 10px 15px; background-color: #f8fafc; border: 1px solid var(--border); }
+    .chart-card { background: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--border); padding: 20px; margin-bottom: 25px; }
+    .chart-filter-select { max-width: 100%; border-radius: var(--radius-md); font-size: 13px; font-weight: 600; padding: 10px 15px; background-color: #f8fafc; border: 1px solid var(--border); }
 
     .ranking-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-bottom: 20px; }
     .ranking-grid.has-cabang { grid-template-columns: 1fr 1fr; }
-    @media (max-width: 768px) { .ranking-grid.has-cabang { grid-template-columns: 1fr; } }
 
-    .ranking-card { background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%); border: 1px solid #fecaca; border-radius: var(--radius-lg); padding: 20px; display: flex; align-items: center; gap: 20px; }
+    .ranking-card { background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%); border: 1px solid #fecaca; border-radius: var(--radius-lg); padding: 15px; display: flex; align-items: center; gap: 15px; }
     .ranking-card.cabang-variant { background: linear-gradient(135deg, #eff8ff 0%, #ffffff 100%); border: 1px solid #bae0fd; }
 
-    .rank-number-box { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #fff; border-radius: var(--radius-md); padding: 15px 20px; text-align: center; min-width: 120px; box-shadow: 0 8px 15px -5px rgba(193, 18, 31, 0.4); }
-    .rank-number-box.rank-top { background: linear-gradient(135deg, #d4a017, #a87908); box-shadow: 0 8px 15px -5px rgba(212, 160, 23, 0.4); }
-    .rank-number-box.blue-box { background: linear-gradient(135deg, var(--blue), var(--blue-dark)); box-shadow: 0 8px 15px -5px rgba(3, 105, 161, 0.4); }
+    .rank-number-box { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #fff; border-radius: var(--radius-md); padding: 12px; text-align: center; min-width: 100px; box-shadow: 0 6px 12px -3px rgba(193, 18, 31, 0.3); }
+    .rank-number-box.rank-top { background: linear-gradient(135deg, #d4a017, #a87908); box-shadow: 0 6px 12px -3px rgba(212, 160, 23, 0.3); }
+    .rank-number-box.blue-box { background: linear-gradient(135deg, var(--blue), var(--blue-dark)); box-shadow: 0 6px 12px -3px rgba(3, 105, 161, 0.3); }
 
-    .rank-label { font-size: 10px; font-weight: 800; opacity: 0.9; letter-spacing: 0.5px; margin-bottom: 5px; text-transform: uppercase; }
-    .rank-value { font-size: 32px; font-weight: 800; line-height: 1; margin-bottom: 2px; }
-    .rank-sub { font-size: 10px; opacity: 0.9; }
+    .rank-label { font-size: 9px; font-weight: 800; opacity: 0.9; letter-spacing: 0.5px; margin-bottom: 3px; text-transform: uppercase; }
+    .rank-value { font-size: 26px; font-weight: 800; line-height: 1; margin-bottom: 2px; }
+    .rank-sub { font-size: 9px; opacity: 0.9; }
 
-    .rank-stat-label { font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 2px; }
-    .rank-stat-value { font-size: 18px; font-weight: 800; color: var(--text-main); }
+    .rank-stat-label { font-size: 10px; font-weight: 700; color: var(--text-muted); margin-bottom: 2px; }
+    .rank-stat-value { font-size: 16px; font-weight: 800; color: var(--text-main); }
 
-    .btn-outline-leaderboard { border: 2px solid var(--primary); color: var(--primary); background: #fff; font-weight: 700; border-radius: var(--radius-md); padding: 8px 16px; transition: all 0.2s; }
+    .btn-outline-leaderboard { border: 2px solid var(--primary); color: var(--primary); background: #fff; font-weight: 700; border-radius: var(--radius-md); padding: 8px 14px; font-size: 13px; transition: all 0.2s; }
     .btn-outline-leaderboard:hover { background: var(--primary); color: #fff; }
 
     .lb-row-top1 { background: linear-gradient(90deg, #fffbeb, #ffffff) !important; }
     .lb-row-top2 { background: linear-gradient(90deg, #f8fafc, #ffffff) !important; }
     .lb-row-top3 { background: linear-gradient(90deg, #fef2f2, #ffffff) !important; }
-    .lb-row-me { position: relative; }
     .lb-row-me td { border-top: 2px solid var(--primary); border-bottom: 2px solid var(--primary); }
     .lb-row-me td:first-child { border-left: 2px solid var(--primary); }
     .lb-row-me td:last-child { border-right: 2px solid var(--primary); }
-    .lb-table th { position: sticky; top: 0; z-index: 2; background: #f8fafc; }
 
-    @media (max-width: 576px) { .w-100-mobile { width: 100% !important; } }
+    /* RESPONSIVE SMARTPHONE REPAIR */
+    @media (max-width: 768px) {
+      .custom-navbar { padding: 10px 0; }
+      .custom-navbar .container { flex-direction: column; text-align: center; gap: 10px !important; }
+      .btn-leaderboard-nav { width: 100%; }
+      .controls-wrapper { padding: 15px; }
+      .ranking-grid.has-cabang { grid-template-columns: 1fr; }
+      .ranking-card { flex-direction: column; text-align: center; align-items: center; }
+      .rank-number-box { width: 100%; }
+      .session-header { flex-direction: column; align-items: flex-start; }
+      .session-header div:last-child { width: 100%; display: flex; gap: 8px; }
+      .session-header .btn { flex: 1; font-size: 12px; padding: 8px; }
+      .modal-body { padding: 10px !important; }
+      .chart-card { padding: 15px; }
+      .score-chip { font-size: 11px; padding: 6px 10px; }
+    }
   </style>
 </head>
 <body>
 
 <nav class="custom-navbar">
   <div class="container d-flex justify-content-between align-items-center flex-wrap gap-3">
-    <div class="d-flex align-items-center gap-3">
+    <div class="d-flex align-items-center gap-3 flex-wrap justify-content-center">
       <img src="https://tosbmptn15ub.weebly.com/uploads/4/6/1/4/46146887/929305838.png" alt="Logo" class="logo-img">
-      <div>
-        <span class="fw-800 text-dark d-block lh-1" style="font-size: 18px; letter-spacing: -0.5px;">PORTAL RAPOR DIGITAL</span>
-        <span class="text-muted fw-bold" style="font-size: 12px; letter-spacing: 0.5px;">NEUTRON MURANGAN</span>
+      <div class="text-sm-start text-center">
+        <span class="fw-800 text-dark d-block lh-1" style="font-size: 16px; letter-spacing: -0.5px;">PORTAL RAPOR DIGITAL</span>
+        <span class="text-muted fw-bold" style="font-size: 11px; letter-spacing: 0.5px;">NEUTRON MURANGAN</span>
       </div>
     </div>
-    <div class="d-flex align-items-center gap-3">
-      <button class="btn-leaderboard-nav" onclick="openLeaderboardModal(null)">
-        <i class="fa-solid fa-trophy me-2"></i>Papan Peringkat
-      </button>
-    </div>
+    <button class="btn-leaderboard-nav" onclick="openLeaderboardModal(null)">
+      <i class="fa-solid fa-trophy me-2 text-warning"></i>Papan Peringkat Nasional
+    </button>
   </div>
 </nav>
 
-<div class="container my-4">
+<div class="container my-3 px-3">
   <div class="controls-wrapper">
     <div class="row g-3 align-items-center">
-      <div class="col-md-6 col-lg-5">
+      <div class="col-12 col-md-5">
         <div class="search-box">
           <i class="fa-solid fa-magnifying-glass"></i>
           <input type="text" class="search-input" id="searchInput" placeholder="Cari nama siswa di sini..." onkeyup="renderCurrentList()">
         </div>
       </div>
-      <div class="col-md-6 col-lg-4">
+      <div class="col-12 col-md-4">
         <div class="btn-toggle-group">
-          <button class="btn-toggle-mode active" id="btnSortNama" onclick="switchSortMode('NAMA')"><i class="fa-solid fa-arrow-down-a-z me-2"></i>Urut Nama</button>
-          <button class="btn-toggle-mode" id="btnSortRank" onclick="switchSortMode('RANK')"><i class="fa-solid fa-ranking-star me-2"></i>Urut Peringkat</button>
+          <button class="btn-toggle-mode active" id="btnSortNama" onclick="switchSortMode('NAMA')"><i class="fa-solid fa-arrow-down-a-z me-2"></i>Nama</button>
+          <button class="btn-toggle-mode" id="btnSortRank" onclick="switchSortMode('RANK')"><i class="fa-solid fa-ranking-star me-2"></i>Peringkat</button>
         </div>
       </div>
-      <div class="col-md-6 col-lg-3" id="sesiRankSelectorWrap" style="display:none;">
+      <div class="col-12 col-md-3" id="sesiRankSelectorWrap" style="display:none;">
         <select class="form-select fw-bold search-input" id="sesiRankSelect" onchange="renderCurrentList()"></select>
       </div>
     </div>
     <div class="cabang-banner">
-      <i class="fa-solid fa-map-pin fs-5 text-primary"></i>
-      <span>Menampilkan peserta cabang <b id="cabangBannerNama" class="text-primary">YOGYAKARTA-18</b> — <span id="cabangBannerCount" class="badge bg-primary rounded-pill ms-1">0</span> siswa</span>
+      <i class="fa-solid fa-map-pin text-primary"></i>
+      <span>Cabang: <b id="cabangBannerNama" class="text-primary">YOGYAKARTA-18</b> — <span id="cabangBannerCount" class="badge bg-primary rounded-pill ms-1">0</span> siswa</span>
     </div>
   </div>
 
-  <div class="row g-4" id="student-list">
+  <div class="row g-3" id="student-list">
     <div class="col-12 text-center p-5">
-      <div class="spinner-border text-danger" style="width: 3rem; height: 3rem;" role="status"></div>
-      <p class="mt-4 text-muted fw-bold">Menyinkronkan Data Evaluasi...</p>
+      <div class="spinner-border text-danger" role="status"></div>
+      <p class="mt-3 text-muted fw-bold">Menyinkronkan Data Evaluasi...</p>
     </div>
   </div>
 </div>
@@ -183,27 +195,27 @@
   <div class="modal-dialog modal-fullscreen">
     <div class="modal-content" style="background-color: var(--bg-main);">
       
-      <div class="bg-white border-bottom px-4 py-3 d-flex justify-content-between align-items-center sticky-top shadow-sm">
+      <div class="bg-white border-bottom px-3 py-3 d-flex justify-content-between align-items-center sticky-top shadow-sm">
         <div>
-          <h4 class="fw-800 text-dark m-0 mb-1" id="m-nama" style="font-size: 22px; letter-spacing:-0.5px;">Nama Siswa</h4>
-          <div class="text-muted d-flex gap-3 flex-wrap" id="m-meta" style="font-size: 13px; font-weight: 600;"></div>
+          <h4 class="fw-800 text-dark m-0 mb-1" id="m-nama" style="font-size: 18px;">Nama Siswa</h4>
+          <div class="text-muted d-flex gap-2 flex-wrap" id="m-meta" style="font-size: 11px; font-weight: 600;"></div>
         </div>
         <button type="button" class="btn-close bg-light p-2 rounded-circle" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
-      <div class="modal-body p-3 p-md-4">
+      <div class="modal-body p-2 p-md-4">
         <div class="container p-0">
           
           <div class="chart-card shadow-sm">
-            <div class="row g-3 text-center mb-4 border-bottom pb-4" id="overall-stats-container"></div>
-            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+            <div class="row g-2 text-center mb-3 border-bottom pb-3" id="overall-stats-container" style="font-size: 12px;"></div>
+            <div class="d-flex flex-column gap-2 mb-3">
               <div class="d-flex align-items-center gap-2">
-                <div class="bg-danger-subtle text-danger p-2 rounded-circle"><i class="fa-solid fa-chart-line"></i></div>
-                <h6 class="fw-800 m-0 text-dark" style="font-size: 16px;">Grafik Tren Evaluasi Belajar</h6>
+                <div class="bg-danger-subtle text-danger p-2 rounded-circle" style="width:30px; height:30px; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-chart-line fs-6"></i></div>
+                <h6 class="fw-800 m-0 text-dark" style="font-size: 14px;">Grafik Tren Evaluasi Belajar (Rerata dari Sesi ke Sesi)</h6>
               </div>
               <select class="form-select chart-filter-select text-dark" id="chartMapelSelect" onchange="updateChartView()"></select>
             </div>
-            <div style="position: relative; height:260px; width:100%">
+            <div style="position: relative; height:220px; width:100%">
               <canvas id="trendChart"></canvas>
             </div>
           </div>
@@ -220,37 +232,37 @@
   <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
     <div class="modal-content border-0 shadow-lg">
       <div class="modal-header text-white" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark));">
-        <h5 class="modal-title fw-800"><i class="fa-solid fa-trophy me-2 text-warning"></i>Papan Peringkat Nasional</h5>
+        <h5 class="modal-title fw-800 fs-6"><i class="fa-solid fa-trophy me-2 text-warning"></i>Papan Peringkat Nasional</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
       </div>
-      <div class="modal-body p-4 bg-light">
-        <div class="row g-3 mb-4 bg-white p-3 rounded-4 shadow-sm border">
-          <div class="col-md-5">
-            <label class="small fw-bold text-muted mb-2">SESI EVALUASI</label>
+      <div class="modal-body p-3 bg-light">
+        <div class="row g-2 mb-3 bg-white p-3 rounded-4 shadow-sm border">
+          <div class="col-12 col-md-4">
+            <label class="small fw-bold text-muted mb-1">SESI EVALUASI</label>
             <select class="form-select fw-bold bg-light" id="lbSesiSelect" onchange="renderLeaderboardTable()"></select>
           </div>
-          <div class="col-md-4">
-            <label class="small fw-bold text-muted mb-2">FILTER CABANG</label>
+          <div class="col-12 col-md-4">
+            <label class="small fw-bold text-muted mb-1">FILTER CABANG</label>
             <select class="form-select fw-bold bg-light" id="lbCabangSelect" onchange="renderLeaderboardTable()">
               <option value="ALL">🌍 Semua Cabang (Nasional)</option>
             </select>
           </div>
-          <div class="col-md-3">
-            <label class="small fw-bold text-muted mb-2">CARI NAMA</label>
+          <div class="col-12 col-md-4">
+            <label class="small fw-bold text-muted mb-1">CARI NAMA</label>
             <input type="text" class="form-control fw-bold bg-light" id="lbSearchInput" placeholder="Ketik nama..." onkeyup="renderLeaderboardTable()">
           </div>
         </div>
         
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <div id="lb-summary" class="small text-muted fw-bold"></div>
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <div id="lb-summary" class="small text-muted fw-bold" style="font-size: 11px;"></div>
         </div>
 
         <div class="bg-white border rounded-4 overflow-hidden shadow-sm">
-          <div class="table-responsive" style="max-height: 55vh;">
+          <div class="table-responsive" style="max-height: 50vh;">
             <table class="table table-clean lb-table mb-0">
               <thead>
                 <tr>
-                  <th style="width:70px;">Rank</th>
+                  <th style="width:60px;">Rank</th>
                   <th class="text-start">Nama Peserta</th>
                   <th>Cabang</th>
                   <th>Rerata</th>
@@ -268,7 +280,6 @@
 </div>
 
 <script>
-  // PENTING: Ganti URL ini dengan URL Web App Google Apps Script Anda yang baru
   const API_URL = "https://script.google.com/macros/s/AKfycbyC9OY4y0GB-JXFJrdVZkf2RhOAfOv0BnoZha6KHC-E7PVtMACnYGSdNLLOv3s7SlUFcw/exec"; 
 
   var MASTER_DATA = [];        
@@ -277,6 +288,7 @@
   var SORT_MODE = 'NAMA';
   var LOGO_URL = "https://tosbmptn15ub.weebly.com/uploads/4/6/1/4/46146887/929305838.png";
   var globalChartInstance = null;
+  var sessionChartInstances = {}; 
   var currentSesiDataGlobal = {};
   var currentSesiLabelsGlobal = [];
 
@@ -360,7 +372,7 @@
     sortedSesi.forEach(function(sesi) {
       var opt = document.createElement('option');
       opt.value = sesi;
-      opt.innerText = "Berdasarkan: " + sesi;
+      opt.innerText = "Sesi: " + sesi;
       sel.appendChild(opt);
     });
   }
@@ -371,6 +383,33 @@
     document.getElementById('btnSortRank').classList.toggle('active', mode === 'RANK');
     document.getElementById('sesiRankSelectorWrap').style.display = (mode === 'RANK') ? 'block' : 'none';
     renderCurrentList();
+  }
+
+  // Menghitung nilai rata-rata seluruh peserta secara realtime berdasarkan sesi dan subtes
+  function hitungRerataNasionalSubtes(sesiName) {
+    var totalNilaiPerMapel = {};
+    var jumlahPesertaPerMapel = {};
+
+    MASTER_DATA.forEach(function(siswa) {
+      if (siswa.sesiData && siswa.sesiData[sesiName]) {
+        var subjects = siswa.sesiData[sesiName].subjects || [];
+        subjects.forEach(function(sub) {
+          var namaMapel = sub.nama.trim().toUpperCase();
+          if (!totalNilaiPerMapel[namaMapel]) {
+            totalNilaiPerMapel[namaMapel] = 0;
+            jumlahPesertaPerMapel[namaMapel] = 0;
+          }
+          totalNilaiPerMapel[namaMapel] += Number(sub.nilai || 0);
+          jumlahPesertaPerMapel[namaMapel]++;
+        });
+      }
+    });
+
+    var rerataHasil = {};
+    for (var mapel in totalNilaiPerMapel) {
+      rerataHasil[mapel] = totalNilaiPerMapel[mapel] / jumlahPesertaPerMapel[mapel];
+    }
+    return rerataHasil;
   }
 
   function renderCurrentList() {
@@ -409,26 +448,27 @@
       var rankBadge = '';
       if (SORT_MODE === 'RANK' && siswa.sesiRankingCabang && siswa.sesiRankingCabang[sesiAcuan]) {
         var rk = siswa.sesiRankingCabang[sesiAcuan].peringkat;
-        rankBadge = '<span class="rank-pill' + (rk <= 3 ? ' top3' : '') + '">#' + rk + ' Cabang</span>';
+        rankBadge = '<span class="rank-pill mb-2 d-inline-block' + (rk <= 3 ? ' top3' : '') + '">#' + rk + ' Cabang</span>';
       }
 
       var sesiNamesSiswa = Object.keys(siswa.sesiData || {}).sort(function(a,b){ return b.localeCompare(a, undefined, {numeric:true, sensitivity:'base'}); });
       var ringkasan = '';
       if (sesiNamesSiswa.length > 0) {
         var sTerbaru = siswa.sesiData[sesiNamesSiswa[0]];
-        ringkasan = '<span class="badge-kat ' + getKeteranganClass(sTerbaru.keterangan) + ' me-2">' + (sTerbaru.keterangan || '-') + '</span>' +
-                    '<span class="text-muted" style="font-size:12px; font-weight:600;">Rerata: <b class="text-dark">' + Number(sTerbaru.rerata).toFixed(2) + '</b></span>';
+        ringkasan = '<div class="d-flex justify-content-between align-items-center flex-wrap gap-1">' +
+                    '  <span class="badge-kat ' + getKeteranganClass(sTerbaru.keterangan) + '">' + (sTerbaru.keterangan || '-') + '</span>' +
+                    '  <span class="text-muted" style="font-size:11px; font-weight:600;">Rerata: <b class="text-dark">' + Number(sTerbaru.rerata).toFixed(2) + '</b></span>' +
+                    '</div>';
       }
 
-      html += '<div class="col-md-6 col-lg-4">' +
+      html += '<div class="col-12 col-md-6 col-lg-4">' +
               '  <div class="student-card shadow-sm" onclick="bukaDetailSiswaByNama(\'' + siswa.nama.replace(/'/g,"\\'") + '\')">' +
-              rankBadge +
-              '    <div class="d-flex justify-content-between align-items-center mb-3">' +
-              '       <div class="fw-800 text-dark text-truncate" style="font-size:16px;">' + siswa.nama + '</div>' +
-              '       <div class="bg-light rounded-circle p-2 d-flex align-items-center justify-content-center" style="width:32px; height:32px;"><i class="fa-solid fa-chevron-right text-muted" style="font-size:12px;"></i></div>' +
+              '    <div class="d-flex justify-content-between align-items-start gap-2 mb-2">' +
+              '       <div class="fw-800 text-dark text-truncate" style="font-size:15px; max-width:85%;">' + siswa.nama + '</div>' +
+              '       <div class="bg-light rounded-circle d-flex align-items-center justify-content-center" style="width:26px; height:26px; min-width:26px;"><i class="fa-solid fa-chevron-right text-muted" style="font-size:10px;"></i></div>' +
               '    </div>' +
-              '    <div class="text-muted mb-3" style="font-size:13px; font-weight:600;"><i class="fa-solid fa-id-card me-2 text-primary"></i>NIS: ' + (siswa.nis || '-') + '</div>' +
-              '    <div class="mt-auto pt-3 border-top border-dashed">' + ringkasan + '</div>' +
+              '    <div class="text-muted mb-2" style="font-size:12px; font-weight:600;"><i class="fa-solid fa-id-card me-2 text-primary"></i>NIS: ' + (siswa.nis || '-') + '</div>' +
+              '    <div class="mt-2 pt-2 border-top border-dashed">' + rankBadge + ringkasan + '</div>' +
               '  </div>' +
               '</div>';
     });
@@ -458,15 +498,15 @@
            '        <div class="rank-value">#' + rankInfo.peringkat + '</div>' +
            '        <div class="rank-sub">dari ' + rankInfo.totalPeserta + ' peserta</div>' +
            '     </div>' +
-           '     <div class="flex-grow-1">' +
-           '        <div class="d-flex gap-2 flex-wrap mb-3">' +
+           '     <div class="flex-grow-1 w-100">' +
+           '        <div class="d-flex gap-1 flex-wrap mb-2">' +
            '          <span class="badge-kat ' + ketClass + '">' + (rankInfo.keterangan || '-') + '</span>' +
            '          ' + cabangBadge +
            '          <span class="badge bg-light text-dark border px-2 py-1">Top ' + persentil + '%</span>' +
            '        </div>' +
-           '        <div class="d-flex gap-4 flex-wrap bg-white p-2 rounded-3 border" style="display:inline-flex !important;">' +
-           '           <div class="px-3 border-end"><div class="rank-stat-label">RERATA</div><div class="rank-stat-value">' + Number(rankInfo.rerata).toFixed(2) + '</div></div>' +
-           '           <div class="px-3"><div class="rank-stat-label">TOTAL NILAI</div><div class="rank-stat-value text-primary">' + Number(rankInfo.total).toFixed(2) + '</div></div>' +
+           '        <div class="d-flex gap-2 flex-wrap bg-white p-2 rounded-3 border w-100">' +
+           '           <div class="pe-2 border-end flex-grow-1 text-center"><div class="rank-stat-label">RERATA</div><div class="rank-stat-value">' + Number(rankInfo.rerata).toFixed(2) + '</div></div>' +
+           '           <div class="ps-1 flex-grow-1 text-center"><div class="rank-stat-label">TOTAL</div><div class="rank-stat-value text-primary">' + Number(rankInfo.total).toFixed(2) + '</div></div>' +
            '        </div>' +
            '     </div>' +
            '</div>';
@@ -483,8 +523,8 @@
 
     document.getElementById('m-nama').innerText = siswa.nama;
     document.getElementById('m-meta').innerHTML =
-      '<span class="bg-light px-3 py-1 rounded-pill border"><i class="fa-solid fa-id-card me-2 text-primary"></i>' + (siswa.nis || '-') + '</span>' +
-      '<span class="bg-light px-3 py-1 rounded-pill border"><i class="fa-solid fa-map-pin me-2 text-danger"></i>' + (siswa.cabang || '-') + '</span>';
+      '<span class="bg-light px-2 py-1 rounded-pill border"><i class="fa-solid fa-id-card text-primary me-1"></i>' + (siswa.nis || '-') + '</span>' +
+      '<span class="bg-light px-2 py-1 rounded-pill border"><i class="fa-solid fa-map-pin text-danger me-1"></i>' + (siswa.cabang || '-') + '</span>';
 
     var orderedSesiNames = Object.keys(siswa.sesiData).sort(function(a, b) {
        return b.localeCompare(a, undefined, {numeric: true, sensitivity: 'base'});
@@ -496,9 +536,16 @@
     var contentDiv = document.getElementById('m-content-sesi');
     var html = '';
 
+    // Hapus sisa-sisa chart sesi lama
+    sessionChartInstances = {};
+
     orderedSesiNames.forEach(function(sesiName) {
       var sesiObj = siswa.sesiData[sesiName];
       var safeCollapseId = "collapse_" + sesiName.replace(/[^a-zA-Z0-9]/g, "");
+      var canvasSesiId = "canvas_sesi_" + safeCollapseId;
+
+      // Ambil data rata-rata seluruh peserta untuk sesi ini
+      var rerataNasionalMapel = hitungRerataNasionalSubtes(sesiName);
 
       var rankInfoNasional = (siswa.sesiRanking && siswa.sesiRanking[sesiName]) ? siswa.sesiRanking[sesiName] : null;
       var rankInfoCabang = (siswa.sesiRankingCabang && siswa.sesiRankingCabang[sesiName]) ? siswa.sesiRankingCabang[sesiName] : null;
@@ -507,54 +554,84 @@
       if (rankInfoNasional || rankInfoCabang) {
         rankingSectionHtml += '<div class="ranking-grid' + (rankInfoCabang ? ' has-cabang' : '') + '">';
         if (rankInfoNasional) rankingSectionHtml += renderSingleRankBox(rankInfoNasional, '', 'rank-number-box', 'NASIONAL', true);
-        if (rankInfoCabang) rankingSectionHtml += renderSingleRankBox(rankInfoCabang, 'cabang-variant', 'rank-number-box blue-box', 'CABANG ' + TARGET_CABANG_NAME, false);
+        if (rankInfoCabang) rankingSectionHtml += renderSingleRankBox(rankInfoCabang, 'cabang-variant', 'rank-number-box blue-box', 'CABANG', false);
         rankingSectionHtml += '</div>';
         
-        rankingSectionHtml += '<div class="mb-4 text-end">' +
-            '  <button class="btn btn-outline-leaderboard btn-sm" onclick="openLeaderboardModal(\'' + sesiName.replace(/'/g,"\\'") + '\', \'' + siswa.nama.replace(/'/g,"\\'") + '\')">' +
-            '    <i class="fa-solid fa-globe me-2"></i>Lihat Papan Peringkat Nasional' +
+        rankingSectionHtml += '<div class="mb-3 text-end">' +
+            '  <button class="btn btn-outline-leaderboard btn-sm w-100-mobile" onclick="openLeaderboardModal(\'' + sesiName.replace(/'/g,"\\'") + '\', \'' + siswa.nama.replace(/'/g,"\\'") + '\')">' +
+            '    <i class="fa-solid fa-globe me-1"></i>Lihat Papan Peringkat Sesi' +
             '  </button>' +
             '</div>';
       }
 
       var chipsHtml = '';
       (sesiObj.subjects || []).forEach(function(m){
-        chipsHtml += '<div class="score-chip">' + m.nama.toUpperCase() + '<span class="val text-primary">' + Number(m.nilai).toFixed(2) + '</span></div>';
+        chipsHtml += '<div class="score-chip">' + m.nama.toUpperCase() + '<span class="val text-primary">' + Number(m.nilai).toFixed(1) + '</span></div>';
       });
-      chipsHtml += '<div class="score-chip highlight">RERATA <span class="val">' + Number(sesiObj.rerata).toFixed(2) + '</span></div>';
-      chipsHtml += '<div class="score-chip highlight">TOTAL <span class="val">' + Number(sesiObj.total).toFixed(2) + '</span></div>';
+      chipsHtml += '<div class="score-chip highlight">RERATA <span class="val">' + Number(sesiObj.rerata).toFixed(1) + '</span></div>';
+      chipsHtml += '<div class="score-chip highlight">TOTAL <span class="val">' + Number(sesiObj.total).toFixed(1) + '</span></div>';
 
+      // Membuat tabel baru yang terinspirasi dari image_d966ad.jpg dengan penambahan komparasi rata-rata seluruh peserta
       var subjectRowsFull = '';
       (sesiObj.subjects || []).forEach(function(s) {
-        subjectRowsFull += '<tr><td class="text-start fw-bold text-dark">' + s.nama + '</td>' +
-                            '<td class="text-success">' + s.benar + '</td>' +
-                            '<td class="text-danger">' + s.salah + '</td>' +
-                            '<td class="text-secondary">' + s.kosong + '</td>' +
-                            '<td class="fw-800 text-primary" style="font-size:15px;">' + Number(s.nilai).toFixed(2) + '</td></tr>';
+        var namaKey = s.nama.trim().toUpperCase();
+        var avgNasional = rerataNasionalMapel[namaKey] || 0;
+        var statusKet = "";
+        var statusClass = "";
+
+        if (Number(s.nilai) >= avgNasional) {
+          statusKet = '<i class="fa-solid fa-circle-check me-1"></i> di atas rata-rata seluruh peserta';
+          statusClass = "text-above-avg";
+        } else {
+          statusKet = '<i class="fa-solid fa-circle-exclamation me-1"></i> di bawah rata-rata seluruh peserta';
+          statusClass = "text-below-avg";
+        }
+
+        subjectRowsFull += '<tr>' +
+                            '<td class="text-start fw-bold text-dark">' + s.nama + '</td>' +
+                            '<td class="fw-800 text-dark">' + Number(s.nilai).toFixed(1) + '</td>' +
+                            '<td class="text-muted">' + Number(avgNasional).toFixed(1) + '</td>' +
+                            '<td class="' + statusClass + '" style="font-size:11px;">' + statusKet + '</td>' +
+                            '<td><span class="badge bg-light text-dark fw-bold">' + s.benar + 'B / ' + s.salah + 'S / ' + s.kosong + 'K</span></td>' +
+                           '</tr>';
       });
 
       html += '<div class="session-card">' +
               '  <div class="session-header">' +
               '     <div>' +
-              '       <span class="badge bg-danger text-white mb-2" style="font-size:11px; font-weight:800; letter-spacing:1px;">SESI EVALUASI</span>' +
-              '       <h5 class="fw-800 text-dark m-0" style="font-size:20px;">' + sesiName + '</h5>' +
+              '       <span class="badge bg-danger text-white mb-1" style="font-size:10px; font-weight:800; letter-spacing:0.5px;">SESI EVALUASI</span>' +
+              '       <h5 class="fw-800 text-dark m-0" style="font-size:16px;">' + sesiName + '</h5>' +
               '     </div>' +
-              '     <div class="d-flex gap-2 w-100-mobile mt-2 mt-sm-0">' +
-              '       <button class="btn btn-outline-dark fw-bold px-3 py-2" onclick="downloadSesiPDF(\'' + siswa.nama.replace(/'/g,"\\'") + '\', \'' + sesiName.replace(/'/g,"\\'") + '\', ' + index + ')"><i class="fa-solid fa-print me-2"></i>Cetak Rapor</button>' +
-              '       <button class="btn btn-danger fw-bold px-3 py-2" type="button" data-bs-toggle="collapse" data-bs-target="#' + safeCollapseId + '"><i class="fa-solid fa-table-list me-2"></i>Rincian Nilai</button>' +
+              '     <div>' +
+              '       <button class="btn btn-outline-dark fw-bold" onclick="downloadSesiPDF(\'' + siswa.nama.replace(/'/g,"\\'") + '\', \'' + sesiName.replace(/'/g,"\\'") + '\', ' + index + ')"><i class="fa-solid fa-print me-1"></i>Cetak</button>' +
+              '       <button class="btn btn-danger fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#' + safeCollapseId + '" onclick="setTimeout(() => initSessionBarChart(\'' + safeCollapseId + '\', \'' + sesiName + '\', ' + index + '), 200)"><i class="fa-solid fa-chart-bar me-1"></i>Analisis</button>' +
               '     </div>' +
               '  </div>' +
 
               rankingSectionHtml +
 
-              '  <div class="fw-bold text-muted small mb-3"><i class="fa-solid fa-tags me-2"></i>RINGKASAN CAPAIAN:</div>' +
-              '  <div class="d-flex flex-wrap gap-2 mb-2">' + chipsHtml + '</div>' +
+              '  <div class="fw-bold text-muted small mb-2"><i class="fa-solid fa-tags me-1"></i>Ringkasan Nilai Anda:</div>' +
+              '  <div class="d-flex flex-wrap gap-1.5 mb-2">' + chipsHtml + '</div>' +
 
-              '  <div class="collapse mt-4" id="' + safeCollapseId + '">' +
+              '  <div class="collapse mt-3" id="' + safeCollapseId + '">' +
+              '     <div class="bg-white rounded-4 border p-2 mb-3 shadow-sm">' +
+              '        <div class="fw-bold text-dark small mb-2 text-center"><i class="fa-solid fa-chart-column text-primary me-1"></i> Grafik Perbandingan Nilai Anda vs Rata-rata Seluruh Peserta</div>' +
+              '        <div style="position: relative; height:240px; width:100%">' +
+              '           <canvas id="' + canvasSesiId + '"></canvas>' +
+              '        </div>' +
+              '     </div>' +
               '     <div class="bg-white rounded-4 border overflow-hidden shadow-sm">' +
               '       <div class="table-responsive">' +
               '         <table class="table-clean mb-0">' +
-              '           <thead><tr style="background:#f8fafc;"><th class="text-start">Mata Pelajaran</th><th>Benar</th><th>Salah</th><th>Kosong</th><th>Nilai Akhir</th></tr></thead>' +
+              '           <thead>' +
+              '             <tr style="background:#f8fafc;">' +
+              '               <th class="text-start">Subtes (Mata Pelajaran)</th>' +
+              '               <th>Nilai Anda</th>' +
+              '               <th>Rerata Peserta</th>' +
+              '               <th>Keterangan</th>' +
+              '               <th>Detail Jawaban</th>' +
+              '             </tr>' +
+              '           </thead>' +
               '           <tbody>' + subjectRowsFull + '</tbody>' +
               '         </table>' +
               '       </div>' +
@@ -569,6 +646,64 @@
     new bootstrap.Modal(document.getElementById('detailModal')).show();
   }
 
+  // Membuat Bar Chart Komparasi per Sesi layaknya pada file image_d966ad.jpg
+  function initSessionBarChart(collapseId, sesiName, index) {
+    var canvasId = "canvas_sesi_" + collapseId;
+    var canvasEl = document.getElementById(canvasId);
+    if (!canvasEl) return;
+
+    if (sessionChartInstances[canvasId]) {
+      sessionChartInstances[canvasId].destroy();
+    }
+
+    var siswa = CURRENT_LIST[index];
+    var sesiObj = siswa.sesiData[sesiName];
+    var rerataNasionalMapel = hitungRerataNasionalSubtes(sesiName);
+
+    var subtesLabels = [];
+    var nilaiSiswaData = [];
+    var nilaiNasionalData = [];
+
+    (sesiObj.subjects || []).forEach(function(s) {
+      subtesLabels.push(s.nama.substring(0, 5).toUpperCase() + '.');
+      nilaiSiswaData.push(Number(s.nilai || 0));
+      nilaiNasionalData.push(Number(rerataNasionalMapel[s.nama.trim().toUpperCase()] || 0));
+    });
+
+    var ctx = canvasEl.getContext('2d');
+    sessionChartInstances[canvasId] = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: subtesLabels,
+        datasets: [
+          {
+            label: 'Rata-rata Anda',
+            data: nilaiSiswaData,
+            backgroundColor: '#0369a1',
+            borderRadius: 4
+          },
+          {
+            label: 'Rata-rata Seluruh Peserta',
+            data: nilaiNasionalData,
+            backgroundColor: '#d4a017',
+            borderRadius: 4
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { font: { family: 'Plus Jakarta Sans', size: 10, weight: 'bold' } } }
+        },
+        scales: {
+          y: { min: 0, max: 100, ticks: { font: { family: 'Plus Jakarta Sans', size: 10, weight: 'bold' } } },
+          x: { ticks: { font: { family: 'Plus Jakarta Sans', size: 9, weight: 'bold' } } }
+        }
+      }
+    });
+  }
+
   function setupMapelDropdownOptions(sesiData) {
     var selectMapel = document.getElementById('chartMapelSelect');
     selectMapel.innerHTML = "";
@@ -580,7 +715,7 @@
 
     var optAll = document.createElement('option');
     optAll.value = "ALL";
-    optAll.innerText = "📈 Rerata Seluruh Sesi";
+    optAll.innerText = "📈 Tampilkan Rerata Seluruh Sesi";
     selectMapel.appendChild(optAll);
 
     mapelSet.forEach(function(mapelName) {
@@ -630,10 +765,10 @@
     if (highestScore === -1) highestScore = 0;
 
     document.getElementById('overall-stats-container').innerHTML = `
-      <div class="col-6 col-md-3"><div class="fw-bold text-muted small mb-1">RATA-RATA</div><div class="fs-4 fw-800 text-dark">${overAllRata}</div></div>
-      <div class="col-6 col-md-3"><div class="fw-bold text-muted small mb-1">NILAI TERTINGGI</div><div class="fs-4 fw-800 text-success">${highestScore}</div></div>
-      <div class="col-6 col-md-3"><div class="fw-bold text-muted small mb-1">NILAI TERENDAH</div><div class="fs-4 fw-800 text-danger">${lowestScore}</div></div>
-      <div class="col-6 col-md-3"><div class="fw-bold text-muted small mb-1">TOTAL JAWABAN BENAR</div><div class="fs-4 fw-800 text-primary">${totalAllB} <span class="fs-6 text-muted fw-bold">Soal</span></div></div>
+      <div class="col-6 col-md-3 border-end"><div class="fw-bold text-muted small">RERATA AKHIR</div><div class="fs-5 fw-800 text-dark">${overAllRata}</div></div>
+      <div class="col-6 col-md-3 border-md-end"><div class="fw-bold text-muted small">TERTINGGI</div><div class="fs-5 fw-800 text-success">${highestScore}</div></div>
+      <div class="col-6 col-md-3 border-end"><div class="fw-bold text-muted small">TERENDAH</div><div class="fs-5 fw-800 text-danger">${lowestScore}</div></div>
+      <div class="col-6 col-md-3"><div class="fw-bold text-muted small">TOTAL BENAR</div><div class="fs-5 fw-800 text-primary">${totalAllB} <span style="font-size:10px; color:#64748b;">Soal</span></div></div>
     `;
 
     if (globalChartInstance) { globalChartInstance.destroy(); }
@@ -645,16 +780,16 @@
         labels: reversedLabels,
         datasets: [{
           data: chartDataPoints, borderColor: activeColor,
-          backgroundColor: selectedMapel === "ALL" ? 'rgba(193, 18, 31, 0.08)' : 'rgba(3, 105, 161, 0.08)',
-          borderWidth: 3, pointRadius: 5, pointBackgroundColor: '#fff', pointBorderColor: activeColor, pointBorderWidth: 2, tension: 0.3, fill: true
+          backgroundColor: selectedMapel === "ALL" ? 'rgba(193, 18, 31, 0.06)' : 'rgba(3, 105, 161, 0.06)',
+          borderWidth: 2.5, pointRadius: 4, pointBackgroundColor: '#fff', pointBorderColor: activeColor, pointBorderWidth: 2, tension: 0.25, fill: true
         }]
       },
       options: {
         responsive: true, maintainAspectRatio: false,
         plugins: { legend: { display: false } },
         scales: {
-          y: { min: 0, max: 100, border: {display: false}, grid: {color: '#e2e8f0', drawTicks: false}, ticks: { font: { family: 'Plus Jakarta Sans', size: 11, weight: 'bold' }, padding: 10 } },
-          x: { border: {display: false}, grid: {display: false}, ticks: { font: { family: 'Plus Jakarta Sans', size: 11, weight: 'bold' } } }
+          y: { min: 0, max: 100, border: {display: false}, grid: {color: '#e2e8f0', drawTicks: false}, ticks: { font: { family: 'Plus Jakarta Sans', size: 10, weight: 'bold' } } },
+          x: { border: {display: false}, grid: {display: false}, ticks: { font: { family: 'Plus Jakarta Sans', size: 10, weight: 'bold' } } }
         }
       }
     });
@@ -670,7 +805,7 @@
 
     var cabangSelect = document.getElementById('lbCabangSelect');
     var opt2 = document.createElement('option');
-    opt2.value = "TARGET"; opt2.innerText = "📍 Khusus Cabang " + TARGET_CABANG_NAME;
+    opt2.value = "TARGET"; opt2.innerText = "📍 Cabang " + TARGET_CABANG_NAME;
     cabangSelect.appendChild(opt2);
   }
 
@@ -693,7 +828,7 @@
     var tbody = document.getElementById('lb-tbody');
 
     if (filtered.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted p-5 fw-bold">Data tidak ditemukan.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted p-4 fw-bold">Data tidak ditemukan.</td></tr>';
     } else {
       var html = '';
       filtered.forEach(function(row) {
@@ -706,11 +841,11 @@
         var medal = row.peringkat === 1 ? '🥇' : (row.peringkat === 2 ? '🥈' : (row.peringkat === 3 ? '🥉' : ('<span class="text-muted">#' + row.peringkat + '</span>')));
         
         html += '<tr class="' + rowClass + '">' +
-                '  <td class="fs-5 text-center">' + medal + '</td>' +
+                '  <td class="fs-6 text-center">' + medal + '</td>' +
                 '  <td class="text-start fw-800 text-dark">' + row.nama + '</td>' +
                 '  <td><span class="badge bg-light text-dark border px-2 py-1">' + (row.cabang || '-') + '</span></td>' +
-                '  <td class="fw-bold text-dark">' + Number(row.rerata).toFixed(2) + '</td>' +
-                '  <td class="fw-800 text-primary fs-6">' + Number(row.total).toFixed(2) + '</td>' +
+                '  <td class="fw-bold text-dark">' + Number(row.rerata).toFixed(1) + '</td>' +
+                '  <td class="fw-800 text-primary">' + Number(row.total).toFixed(1) + '</td>' +
                 '  <td><span class="badge-kat ' + getKeteranganClass(row.keterangan) + '">' + (row.keterangan || '-') + '</span></td>' +
                 '</tr>';
       });
@@ -718,13 +853,10 @@
     }
 
     document.getElementById('lb-summary').innerHTML =
-      '<i class="fa-solid fa-users me-2 text-primary"></i>Menampilkan <b class="text-dark">' + filtered.length + '</b> dari <b class="text-dark">' + sourceArr.length + '</b> peserta' +
+      '<i class="fa-solid fa-users text-primary me-1"></i> Menampilkan <b>' + filtered.length + '</b> dari <b>' + sourceArr.length + '</b> peserta' +
       (cabangMode === 'TARGET' ? ' (' + TARGET_CABANG_NAME + ')' : ' (Nasional)');
   }
 
-  // =====================================
-  // CETAK PDF (NON-IRT, BERSIH, 1 LEMBAR UTAMA)
-  // =====================================
   async function downloadSesiPDF(namaSiswa, sesiName, index) {
     await logoReadyPromise; 
 
@@ -795,7 +927,7 @@
       headStyles: { fillColor: [193, 18, 31], textColor: [255, 255, 255], fontSize: 10 },
       columnStyles: { 
         0: { halign: 'left' },
-        4: { textColor: [193, 18, 31] } // Highlight nilai
+        4: { textColor: [193, 18, 31] }
       },
       alternateRowStyles: { fillColor: [248, 250, 252] }
     });
@@ -813,7 +945,6 @@
       pageW / 2, afterTableY + 8.5, { align: 'center' }
     );
 
-    // Footer
     var pageHeight = doc.internal.pageSize.getHeight();
     doc.setFontSize(8); doc.setFont("helvetica", "italic"); doc.setTextColor(148, 163, 184);
     doc.text("Dicetak otomatis oleh Portal Rapor Digital - Neutron Murangan", pageW / 2, pageHeight - 10, { align: 'center' });
