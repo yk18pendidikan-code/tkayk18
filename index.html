@@ -277,11 +277,11 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> 
 </div>
-
+ 
 <script>
-  const API_URL = "https://script.google.com/macros/s/AKfycbyC9OY4y0GB-JXFJrdVZkf2RhOAfOv0BnoZha6KHC-E7PVtMACnYGSdNLLOv3s7SlUFcw/exec"; 
+  const API_URL = "https://script.google.com/macros/s/AKfycbxk8Sm9wgo6JOZrDBhT7_jVMJtikE2vjEcd9hw9yUJSnaRZeAtmrKnRJr0sIqGy_UlRtA/exec"; 
 
   var MASTER_DATA = [];        
   var CABANG_DATA = [];        
@@ -294,10 +294,14 @@
   var currentSesiLabelsGlobal = [];
 
   var SESI_LIST_GLOBAL = [];
-  var LEADERBOARD_ALL = {};      
-  var LEADERBOARD_CABANG = {};   
   var TARGET_CABANG_NAME = "";
   var LB_FOCUS_NAMA = null;      
+
+  // Ranking & leaderboard SEKARANG dihitung di browser (bukan lagi dikirim dari backend).
+  // Struktur: RANKING_NASIONAL[sesiName] = { map: {namaNormal: rankInfo}, list: [...], totalPeserta }
+  //           RANKING_CABANG[sesiName]   = idem tapi hanya untuk siswa TARGET_CABANG_NAME
+  var RANKING_NASIONAL = {};
+  var RANKING_CABANG = {};
 
   var LOGO_DATAURL = null;
   var LOGO_RATIO = 40 / 14; 
@@ -339,9 +343,11 @@
 
         MASTER_DATA = rawData;
         SESI_LIST_GLOBAL = res.sesiList || [];
-        LEADERBOARD_ALL = res.leaderboard || {};
-        LEADERBOARD_CABANG = res.leaderboardCabang || {};
         TARGET_CABANG_NAME = res.targetCabang || "CABANG";
+
+        // Backend hanya mengirim data mentah (nilai per sesi). Hitung ranking &
+        // leaderboard sekarang, di browser, sekali saja setelah data selesai dimuat.
+        buildAllRankings();
 
         CABANG_DATA = MASTER_DATA.filter(function(s) {
           return normalizeLabelJS(s.cabang) === normalizeLabelJS(TARGET_CABANG_NAME);
@@ -364,6 +370,87 @@
   function normalizeLabelJS(s) {
     if (s === null || s === undefined) return '';
     return s.toString().trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
+  }
+
+  // Sama seperti normalizeNama_ di backend, dipakai sebagai key peta ranking.
+  function normalizeNamaJS(nama) {
+    if (nama === null || nama === undefined) return '';
+    return nama.toString().trim().toUpperCase().replace(/\s+/g, ' ');
+  }
+
+  // ==========================================================
+  // PERHITUNGAN RANKING & LEADERBOARD (CLIENT-SIDE)
+  // Dulu ini dikerjakan oleh Google Apps Script untuk setiap request.
+  // Sekarang dijalankan sekali di browser setelah data mentah diterima,
+  // sehingga backend jauh lebih ringan & cepat.
+  // ==========================================================
+  function buildAllRankings() {
+    RANKING_NASIONAL = {};
+    RANKING_CABANG = {};
+
+    SESI_LIST_GLOBAL.forEach(function(sesiName) {
+      RANKING_NASIONAL[sesiName] = computeRankingSesi(sesiName, null);
+      RANKING_CABANG[sesiName] = computeRankingSesi(sesiName, TARGET_CABANG_NAME);
+    });
+  }
+
+  // Menghitung peringkat "competition ranking" (nilai total sama = peringkat sama,
+  // peringkat berikutnya lompat sesuai jumlah peserta di atasnya) untuk satu sesi.
+  // filterCabang = null -> hitung nasional (semua siswa).
+  // filterCabang = "YOGYAKARTA-18" -> hitung hanya untuk siswa cabang tsb.
+  function computeRankingSesi(sesiName, filterCabang) {
+    var entries = [];
+
+    MASTER_DATA.forEach(function(siswa) {
+      var sesiObj = siswa.sesiData ? siswa.sesiData[sesiName] : null;
+      if (!sesiObj) return;
+      if (filterCabang && normalizeLabelJS(siswa.cabang) !== normalizeLabelJS(filterCabang)) return;
+
+      entries.push({
+        namaNormal: normalizeNamaJS(siswa.nama),
+        nama: siswa.nama,
+        cabang: siswa.cabang,
+        nis: siswa.nis,
+        total: Number(sesiObj.total || 0),
+        rerata: Number(sesiObj.rerata || 0),
+        keterangan: sesiObj.keterangan
+      });
+    });
+
+    entries.sort(function(a, b) { return b.total - a.total; });
+
+    var totalPeserta = entries.length;
+    var map = {};
+    var list = [];
+    var rankSaatIni = 0;
+    var prevTotal = null;
+
+    entries.forEach(function(item, idx) {
+      if (prevTotal === null || item.total !== prevTotal) {
+        rankSaatIni = idx + 1;
+        prevTotal = item.total;
+      }
+      map[item.namaNormal] = {
+        peringkat: rankSaatIni, totalPeserta: totalPeserta, total: item.total, rerata: item.rerata,
+        keterangan: item.keterangan, cabang: item.cabang, nis: item.nis, cabangNama: filterCabang || null
+      };
+      list.push({
+        peringkat: rankSaatIni, nama: item.nama, cabang: item.cabang, total: item.total, rerata: item.rerata,
+        keterangan: item.keterangan
+      });
+    });
+
+    return { map: map, list: list, totalPeserta: totalPeserta };
+  }
+
+  function getRankNasional(sesiName, nama) {
+    var r = RANKING_NASIONAL[sesiName];
+    return r ? r.map[normalizeNamaJS(nama)] || null : null;
+  }
+
+  function getRankCabang(sesiName, nama) {
+    var r = RANKING_CABANG[sesiName];
+    return r ? r.map[normalizeNamaJS(nama)] || null : null;
   }
 
   function setupSesiRankSelector() {
@@ -422,8 +509,10 @@
     } else {
       var sesiAcuan = document.getElementById('sesiRankSelect').value;
       filtered.sort(function(a, b) {
-        var ra = (a.sesiRankingCabang && a.sesiRankingCabang[sesiAcuan]) ? a.sesiRankingCabang[sesiAcuan].peringkat : null;
-        var rb = (b.sesiRankingCabang && b.sesiRankingCabang[sesiAcuan]) ? b.sesiRankingCabang[sesiAcuan].peringkat : null;
+        var rankInfoA = getRankCabang(sesiAcuan, a.nama);
+        var rankInfoB = getRankCabang(sesiAcuan, b.nama);
+        var ra = rankInfoA ? rankInfoA.peringkat : null;
+        var rb = rankInfoB ? rankInfoB.peringkat : null;
         if (ra === null && rb === null) return a.nama.localeCompare(b.nama, 'id', { sensitivity: 'base' });
         if (ra === null) return 1;
         if (rb === null) return -1;
@@ -447,9 +536,11 @@
     var html = '';
     data.forEach(function(siswa, idx) {
       var rankBadge = '';
-      if (SORT_MODE === 'RANK' && siswa.sesiRankingCabang && siswa.sesiRankingCabang[sesiAcuan]) {
-        var rk = siswa.sesiRankingCabang[sesiAcuan].peringkat;
-        rankBadge = '<span class="rank-pill mb-2 d-inline-block' + (rk <= 3 ? ' top3' : '') + '">#' + rk + ' Cabang</span>';
+      if (SORT_MODE === 'RANK') {
+        var rInfo = getRankCabang(sesiAcuan, siswa.nama);
+        if (rInfo) {
+          rankBadge = '<span class="rank-pill mb-2 d-inline-block' + (rInfo.peringkat <= 3 ? ' top3' : '') + '">#' + rInfo.peringkat + ' Cabang</span>';
+        }
       }
 
       var sesiNamesSiswa = Object.keys(siswa.sesiData || {}).sort(function(a,b){ return b.localeCompare(a, undefined, {numeric:true, sensitivity:'base'}); });
@@ -548,8 +639,9 @@
       // Ambil data rata-rata seluruh peserta untuk sesi ini
       var rerataNasionalMapel = hitungRerataNasionalSubtes(sesiName);
 
-      var rankInfoNasional = (siswa.sesiRanking && siswa.sesiRanking[sesiName]) ? siswa.sesiRanking[sesiName] : null;
-      var rankInfoCabang = (siswa.sesiRankingCabang && siswa.sesiRankingCabang[sesiName]) ? siswa.sesiRankingCabang[sesiName] : null;
+      // Ranking dihitung/diambil dari peta hasil buildAllRankings() (client-side)
+      var rankInfoNasional = getRankNasional(sesiName, siswa.nama);
+      var rankInfoCabang = getRankCabang(sesiName, siswa.nama);
 
       var rankingSectionHtml = '';
       if (rankInfoNasional || rankInfoCabang) {
@@ -824,7 +916,10 @@
     var cabangMode = document.getElementById('lbCabangSelect').value;
     var query = document.getElementById('lbSearchInput').value.toLowerCase();
 
-    var sourceArr = (cabangMode === 'TARGET') ? (LEADERBOARD_CABANG[sesi] || []) : (LEADERBOARD_ALL[sesi] || []);
+    // Ambil leaderboard yang sudah dihitung di browser (lihat buildAllRankings/computeRankingSesi)
+    var sourceObj = (cabangMode === 'TARGET') ? RANKING_CABANG[sesi] : RANKING_NASIONAL[sesi];
+    var sourceArr = (sourceObj && sourceObj.list) ? sourceObj.list : [];
+
     var filtered = sourceArr.filter(function(row) { return row.nama.toLowerCase().includes(query); });
     var tbody = document.getElementById('lb-tbody');
 
@@ -863,8 +958,8 @@
 
     var siswa = CURRENT_LIST[index];
     var sesiObj = siswa.sesiData[sesiName];
-    var rankInfo = (siswa.sesiRanking && siswa.sesiRanking[sesiName]) ? siswa.sesiRanking[sesiName] : null;
-    var rankInfoCabang = (siswa.sesiRankingCabang && siswa.sesiRankingCabang[sesiName]) ? siswa.sesiRankingCabang[sesiName] : null;
+    var rankInfo = getRankNasional(sesiName, siswa.nama);
+    var rankInfoCabang = getRankCabang(sesiName, siswa.nama);
     var { jsPDF } = window.jspdf;
 
     var doc = new jsPDF('p', 'mm', 'a4');
@@ -876,7 +971,7 @@
     infoLines.push({ text: "NIS          : " + (siswa.nis || '-') + "  |  Cabang: " + (siswa.cabang || '-'), bold: false });
     infoLines.push({ text: "Sesi Evaluasi: " + sesiName, bold: false });
     if (rankInfo) infoLines.push({ text: "Peringkat Nasional : #" + rankInfo.peringkat + " dari " + rankInfo.totalPeserta + " peserta", bold: true });
-    if (rankInfoCabang) infoLines.push({ text: "Peringkat Cabang " + (rankInfoCabang.cabangNama || '') + " : #" + rankInfoCabang.peringkat + " dari " + rankInfoCabang.totalPeserta + " peserta", bold: true });
+    if (rankInfoCabang) infoLines.push({ text: "Peringkat Cabang " + TARGET_CABANG_NAME + " : #" + rankInfoCabang.peringkat + " dari " + rankInfoCabang.totalPeserta + " peserta", bold: true });
 
     var titleH = 18;      
     var lineGap = 6;
