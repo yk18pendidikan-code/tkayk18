@@ -48,6 +48,7 @@
       font-size: 13px; font-weight: 700; box-shadow: 0 4px 15px -3px rgba(193,18,31,0.3); transition: all 0.3s ease;
     }
     .btn-leaderboard-nav:hover { transform: translateY(-2px); box-shadow: 0 6px 20px -3px rgba(193,18,31,0.4); color: #fff; }
+    .btn-leaderboard-nav:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
 
     .controls-wrapper { background: var(--surface); border-radius: var(--radius-lg); padding: 20px; border: 1px solid var(--border); box-shadow: 0 10px 30px -5px rgb(0 0 0 / 0.03); margin-bottom: 25px; }
 
@@ -58,10 +59,12 @@
       font-size: 14px; width: 100%; transition: all 0.2s ease; background-color: #f1f5f9; font-weight: 500;
     }
     .search-input:focus { background-color: var(--surface); border-color: var(--primary); box-shadow: 0 0 0 4px rgba(193, 18, 31, 0.1); outline: none; }
+    .search-input:disabled { opacity: 0.6; cursor: not-allowed; }
 
     .btn-toggle-group { background: #f1f5f9; padding: 5px; border-radius: var(--radius-md); display: inline-flex; width: 100%; }
     .btn-toggle-mode { flex: 1; border: none; padding: 10px; border-radius: 10px; font-size: 13px; font-weight: 700; transition: all 0.2s ease; background: transparent; color: var(--text-muted); }
     .btn-toggle-mode.active { background: var(--surface); color: var(--primary); box-shadow: 0 4px 12px rgb(0 0 0 / 0.05); }
+    .btn-toggle-mode:disabled { opacity: 0.6; cursor: not-allowed; }
 
     .cabang-banner { background: linear-gradient(135deg, #f0f9ff, #ffffff); border: 1px solid #bae0fd; border-radius: var(--radius-md); padding: 12px; font-size: 13px; font-weight: 700; color: var(--blue-dark); display: flex; align-items: center; gap: 8px; margin-top: 15px; }
 
@@ -124,6 +127,32 @@
     .lb-row-me td:first-child { border-left: 2px solid var(--primary); }
     .lb-row-me td:last-child { border-right: 2px solid var(--primary); }
 
+    /* SKELETON LOADING */
+    .skeleton-shimmer {
+      position: relative;
+      overflow: hidden;
+      background: #e2e8f0;
+    }
+    .skeleton-shimmer::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      transform: translateX(-100%);
+      background: linear-gradient(90deg, rgba(226,232,240,0) 0%, rgba(255,255,255,0.75) 50%, rgba(226,232,240,0) 100%);
+      animation: skeleton-shine 1.4s ease-in-out infinite;
+    }
+    @keyframes skeleton-shine {
+      100% { transform: translateX(100%); }
+    }
+    .skeleton-card { background: var(--surface); border-radius: var(--radius-lg); padding: 20px; border: 1px solid var(--border); height: 100%; }
+    .skeleton-line { border-radius: 6px; }
+    .skeleton-line.h-title { height: 15px; width: 70%; margin-bottom: 12px; }
+    .skeleton-line.h-sub { height: 11px; width: 45%; margin-bottom: 18px; }
+    .skeleton-line.h-foot { height: 11px; width: 100%; margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--border); }
+    .skeleton-avatar { width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0; }
+    .skeleton-badge-pill { height: 20px; width: 76px; border-radius: 20px; display: inline-block; }
+    .skeleton-btn-label { display: inline-block; width: 130px; height: 12px; border-radius: 6px; vertical-align: middle; }
+
     /* RESPONSIVE SMARTPHONE REPAIR */
     @media (max-width: 768px) {
       .custom-navbar { padding: 10px 0; }
@@ -153,8 +182,8 @@
         <span class="text-muted fw-bold" style="font-size: 11px; letter-spacing: 0.5px;">NEUTRON MURANGAN</span>
       </div>
     </div>
-    <button class="btn-leaderboard-nav" onclick="openLeaderboardModal(null)">
-      <i class="fa-solid fa-trophy me-2 text-warning"></i>Papan Peringkat Nasional
+    <button class="btn-leaderboard-nav" id="btnPapanPeringkatNasional" disabled onclick="openLeaderboardModal(null)">
+      <i class="fa-solid fa-trophy me-2 text-warning"></i><span id="btnPapanPeringkatNasionalLabel" class="skeleton-shimmer skeleton-btn-label"></span>
     </button>
   </div>
 </nav>
@@ -165,13 +194,13 @@
       <div class="col-12 col-md-5">
         <div class="search-box">
           <i class="fa-solid fa-magnifying-glass"></i>
-          <input type="text" class="search-input" id="searchInput" placeholder="Cari nama siswa di sini..." onkeyup="renderCurrentList()">
+          <input type="text" class="search-input" id="searchInput" placeholder="Cari nama siswa di sini..." onkeyup="renderCurrentList()" disabled>
         </div>
       </div>
       <div class="col-12 col-md-4">
         <div class="btn-toggle-group">
-          <button class="btn-toggle-mode active" id="btnSortNama" onclick="switchSortMode('NAMA')"><i class="fa-solid fa-arrow-down-a-z me-2"></i>Nama</button>
-          <button class="btn-toggle-mode" id="btnSortRank" onclick="switchSortMode('RANK')"><i class="fa-solid fa-ranking-star me-2"></i>Peringkat</button>
+          <button class="btn-toggle-mode active" id="btnSortNama" onclick="switchSortMode('NAMA')" disabled><i class="fa-solid fa-arrow-down-a-z me-2"></i>Nama</button>
+          <button class="btn-toggle-mode" id="btnSortRank" onclick="switchSortMode('RANK')" disabled><i class="fa-solid fa-ranking-star me-2"></i>Peringkat</button>
         </div>
       </div>
       <div class="col-12 col-md-3" id="sesiRankSelectorWrap" style="display:none;">
@@ -185,9 +214,66 @@
   </div>
 
   <div class="row g-3" id="student-list">
-    <div class="col-12 text-center p-5">
-      <div class="spinner-border text-danger" role="status"></div>
-      <p class="mt-3 text-muted fw-bold">Menyinkronkan Data Evaluasi...</p>
+    <!-- Skeleton awal (statis, tampil sebelum JS sempat jalan) -->
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="skeleton-card">
+        <div class="d-flex justify-content-between align-items-start gap-2">
+          <div class="skeleton-line h-title skeleton-shimmer" style="flex-grow:1;"></div>
+          <div class="skeleton-avatar skeleton-shimmer"></div>
+        </div>
+        <div class="skeleton-line h-sub skeleton-shimmer"></div>
+        <div class="skeleton-line h-foot skeleton-shimmer" style="height:20px;"></div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="skeleton-card">
+        <div class="d-flex justify-content-between align-items-start gap-2">
+          <div class="skeleton-line h-title skeleton-shimmer" style="flex-grow:1;"></div>
+          <div class="skeleton-avatar skeleton-shimmer"></div>
+        </div>
+        <div class="skeleton-line h-sub skeleton-shimmer"></div>
+        <div class="skeleton-line h-foot skeleton-shimmer" style="height:20px;"></div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="skeleton-card">
+        <div class="d-flex justify-content-between align-items-start gap-2">
+          <div class="skeleton-line h-title skeleton-shimmer" style="flex-grow:1;"></div>
+          <div class="skeleton-avatar skeleton-shimmer"></div>
+        </div>
+        <div class="skeleton-line h-sub skeleton-shimmer"></div>
+        <div class="skeleton-line h-foot skeleton-shimmer" style="height:20px;"></div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="skeleton-card">
+        <div class="d-flex justify-content-between align-items-start gap-2">
+          <div class="skeleton-line h-title skeleton-shimmer" style="flex-grow:1;"></div>
+          <div class="skeleton-avatar skeleton-shimmer"></div>
+        </div>
+        <div class="skeleton-line h-sub skeleton-shimmer"></div>
+        <div class="skeleton-line h-foot skeleton-shimmer" style="height:20px;"></div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="skeleton-card">
+        <div class="d-flex justify-content-between align-items-start gap-2">
+          <div class="skeleton-line h-title skeleton-shimmer" style="flex-grow:1;"></div>
+          <div class="skeleton-avatar skeleton-shimmer"></div>
+        </div>
+        <div class="skeleton-line h-sub skeleton-shimmer"></div>
+        <div class="skeleton-line h-foot skeleton-shimmer" style="height:20px;"></div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="skeleton-card">
+        <div class="d-flex justify-content-between align-items-start gap-2">
+          <div class="skeleton-line h-title skeleton-shimmer" style="flex-grow:1;"></div>
+          <div class="skeleton-avatar skeleton-shimmer"></div>
+        </div>
+        <div class="skeleton-line h-sub skeleton-shimmer"></div>
+        <div class="skeleton-line h-foot skeleton-shimmer" style="height:20px;"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -297,7 +383,12 @@
   var TARGET_CABANG_NAME = "";
   var LB_FOCUS_NAMA = null;      
 
-  // Ranking & leaderboard SEKARANG dihitung di browser (bukan lagi dikirim dari backend).
+  // Jadi true begitu fetch + buildAllRankings() selesai. Dipakai untuk
+  // mengunci tombol/pencarian selama data belum siap, supaya tidak muncul
+  // "Siswa tidak ditemukan" gara-gara data masih kosong saat baru load.
+  var DATA_READY = false;
+
+  // Ranking & leaderboard dihitung di browser (bukan lagi dikirim dari backend).
   // Struktur: RANKING_NASIONAL[sesiName] = { map: {namaNormal: rankInfo}, list: [...], totalPeserta }
   //           RANKING_CABANG[sesiName]   = idem tapi hanya untuk siswa TARGET_CABANG_NAME
   var RANKING_NASIONAL = {};
@@ -332,6 +423,18 @@
   }
   var logoReadyPromise = preloadLogoForPDF();
 
+  // Perhitungan "keterangan" (BAIK/ISTIMEWA/MEMADAI/KURANG) dari angka nilai.
+  // Backend TIDAK lagi mengirim string ini (menghemat ukuran JSON di skala
+  // puluhan ribu baris), jadi dihitung ulang di sini, sama persis dengan
+  // logika getKeterangan_() di Code.gs.
+  function hitungKeterangan(nilai) {
+    var n = Number(nilai) || 0;
+    if (n > 90) return 'ISTIMEWA';
+    if (n >= 71) return 'BAIK';
+    if (n >= 60) return 'MEMADAI';
+    return 'KURANG';
+  }
+
   document.addEventListener("DOMContentLoaded", function() {
     fetch(API_URL)
       .then(response => response.json())
@@ -358,6 +461,18 @@
 
         setupSesiRankSelector();
         setupLeaderboardSelectors();
+
+        // Data benar-benar siap sekarang -> baru buka kunci kontrol.
+        DATA_READY = true;
+        var navBtn = document.getElementById('btnPapanPeringkatNasional');
+        navBtn.disabled = false;
+        var lblBtn = document.getElementById('btnPapanPeringkatNasionalLabel');
+        lblBtn.classList.remove('skeleton-shimmer', 'skeleton-btn-label');
+        lblBtn.innerText = 'Papan Peringkat Nasional';
+        document.getElementById('searchInput').disabled = false;
+        document.getElementById('btnSortNama').disabled = false;
+        document.getElementById('btnSortRank').disabled = false;
+
         renderCurrentList();
       })
       .catch(err => {
@@ -413,7 +528,7 @@
         nis: siswa.nis,
         total: Number(sesiObj.total || 0),
         rerata: Number(sesiObj.rerata || 0),
-        keterangan: sesiObj.keterangan
+        keterangan: hitungKeterangan(sesiObj.rerata)
       });
     });
 
@@ -466,6 +581,7 @@
   }
 
   function switchSortMode(mode) {
+    if (!DATA_READY) return;
     SORT_MODE = mode;
     document.getElementById('btnSortNama').classList.toggle('active', mode === 'NAMA');
     document.getElementById('btnSortRank').classList.toggle('active', mode === 'RANK');
@@ -501,6 +617,8 @@
   }
 
   function renderCurrentList() {
+    if (!DATA_READY) return; // data belum ada -> jangan render apa-apa (biarkan spinner tampil)
+
     var query = document.getElementById('searchInput').value.toLowerCase();
     var filtered = CABANG_DATA.filter(function(s) { return s.nama.toLowerCase().includes(query); });
 
@@ -547,8 +665,9 @@
       var ringkasan = '';
       if (sesiNamesSiswa.length > 0) {
         var sTerbaru = siswa.sesiData[sesiNamesSiswa[0]];
+        var ketTerbaru = hitungKeterangan(sTerbaru.rerata);
         ringkasan = '<div class="d-flex justify-content-between align-items-center flex-wrap gap-1">' +
-                    '  <span class="badge-kat ' + getKeteranganClass(sTerbaru.keterangan) + '">' + (sTerbaru.keterangan || '-') + '</span>' +
+                    '  <span class="badge-kat ' + getKeteranganClass(ketTerbaru) + '">' + ketTerbaru + '</span>' +
                     '  <span class="text-muted" style="font-size:11px; font-weight:600;">Rerata: <b class="text-dark">' + Number(sTerbaru.rerata).toFixed(2) + '</b></span>' +
                     '</div>';
       }
@@ -903,6 +1022,13 @@
   }
 
   function openLeaderboardModal(sesiName, namaFokus) {
+    // Penjaga utama: tombol nav sudah disabled sampai DATA_READY, tapi ini
+    // jaga-jaga kalau fungsi ini dipanggil dari tempat lain sebelum data siap.
+    if (!DATA_READY) {
+      alert('Data masih dimuat, mohon tunggu beberapa detik lalu coba lagi.');
+      return;
+    }
+
     LB_FOCUS_NAMA = namaFokus || null;
     if (sesiName) document.getElementById('lbSesiSelect').value = sesiName;
     document.getElementById('lbCabangSelect').value = 'ALL';
@@ -1033,11 +1159,12 @@
     doc.setFillColor(241, 245, 249); doc.setDrawColor(203, 213, 225);
     doc.roundedRect(marginX, afterTableY, pageW - marginX * 2, 14, 2, 2, 'FD');
     
+    var ketPdf = hitungKeterangan(sesiObj.rerata);
     doc.setFontSize(9.5); doc.setTextColor(15, 23, 42); doc.setFont("helvetica", "bold");
     doc.text(
       "RERATA: " + Number(sesiObj.rerata).toFixed(2) + 
       "        TOTAL NILAI: " + Number(sesiObj.total).toFixed(2) + 
-      "        KETERANGAN: " + (sesiObj.keterangan || '-'), 
+      "        KETERANGAN: " + ketPdf, 
       pageW / 2, afterTableY + 8.5, { align: 'center' }
     );
 
