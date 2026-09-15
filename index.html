@@ -423,15 +423,20 @@
   }
   var logoReadyPromise = preloadLogoForPDF();
 
-  // Perhitungan "keterangan" (BAIK/ISTIMEWA/MEMADAI/KURANG) dari angka nilai.
-  // Backend TIDAK lagi mengirim string ini (menghemat ukuran JSON di skala
-  // puluhan ribu baris), jadi dihitung ulang di sini, sama persis dengan
-  // logika getKeterangan_() di Code.gs.
-  function hitungKeterangan(nilai) {
-    var n = Number(nilai) || 0;
-    if (n > 90) return 'ISTIMEWA';
-    if (n >= 71) return 'BAIK';
-    if (n >= 60) return 'MEMADAI';
+  // Perhitungan "keterangan" (ISTIMEWA/BAIK/MEMADAI/KURANG) dihitung dari
+  // NILAI TOTAL sesi (skala ratusan, hasil penjumlahan semua subtes),
+  // sesuai tabel kategori berikut:
+  //   >= 725 s.d 800  -> ISTIMEWA
+  //   601   s.d 724   -> BAIK
+  //   500   s.d 600   -> MEMADAI
+  //   200   s.d 499   -> KURANG (juga fallback untuk nilai di bawah 200)
+  // Backend TIDAK mengirim string keterangan ini (menghemat ukuran JSON di
+  // skala puluhan ribu baris), jadi dihitung ulang di sini.
+  function hitungKeterangan(nilaiTotal) {
+    var n = Number(nilaiTotal) || 0;
+    if (n >= 725) return 'ISTIMEWA';
+    if (n >= 601) return 'BAIK';
+    if (n >= 500) return 'MEMADAI';
     return 'KURANG';
   }
 
@@ -528,7 +533,7 @@
         nis: siswa.nis,
         total: Number(sesiObj.total || 0),
         rerata: Number(sesiObj.rerata || 0),
-        keterangan: hitungKeterangan(sesiObj.rerata)
+        keterangan: hitungKeterangan(sesiObj.total)
       });
     });
 
@@ -665,7 +670,7 @@
       var ringkasan = '';
       if (sesiNamesSiswa.length > 0) {
         var sTerbaru = siswa.sesiData[sesiNamesSiswa[0]];
-        var ketTerbaru = hitungKeterangan(sTerbaru.rerata);
+        var ketTerbaru = hitungKeterangan(sTerbaru.total);
         ringkasan = '<div class="d-flex justify-content-between align-items-center flex-wrap gap-1">' +
                     '  <span class="badge-kat ' + getKeteranganClass(ketTerbaru) + '">' + ketTerbaru + '</span>' +
                     '  <span class="text-muted" style="font-size:11px; font-weight:600;">Rerata: <b class="text-dark">' + Number(sTerbaru.rerata).toFixed(2) + '</b></span>' +
@@ -1159,7 +1164,7 @@
     doc.setFillColor(241, 245, 249); doc.setDrawColor(203, 213, 225);
     doc.roundedRect(marginX, afterTableY, pageW - marginX * 2, 14, 2, 2, 'FD');
     
-    var ketPdf = hitungKeterangan(sesiObj.rerata);
+    var ketPdf = hitungKeterangan(sesiObj.total);
     doc.setFontSize(9.5); doc.setTextColor(15, 23, 42); doc.setFont("helvetica", "bold");
     doc.text(
       "RERATA: " + Number(sesiObj.rerata).toFixed(2) + 
