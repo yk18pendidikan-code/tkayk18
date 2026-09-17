@@ -214,7 +214,7 @@
   </div>
 
   <div class="row g-3" id="student-list">
-    <!-- Skeleton awal (statis, tampil sebelum JS sempat jalan) -->
+    <!-- Skeleton awal -->
     <div class="col-12 col-md-6 col-lg-4">
       <div class="skeleton-card">
         <div class="d-flex justify-content-between align-items-start gap-2">
@@ -383,14 +383,8 @@
   var TARGET_CABANG_NAME = "";
   var LB_FOCUS_NAMA = null;      
 
-  // Jadi true begitu fetch + buildAllRankings() selesai. Dipakai untuk
-  // mengunci tombol/pencarian selama data belum siap, supaya tidak muncul
-  // "Siswa tidak ditemukan" gara-gara data masih kosong saat baru load.
   var DATA_READY = false;
 
-  // Ranking & leaderboard dihitung di browser (bukan lagi dikirim dari backend).
-  // Struktur: RANKING_NASIONAL[sesiName] = { map: {namaNormal: rankInfo}, list: [...], totalPeserta }
-  //           RANKING_CABANG[sesiName]   = idem tapi hanya untuk siswa TARGET_CABANG_NAME
   var RANKING_NASIONAL = {};
   var RANKING_CABANG = {};
 
@@ -423,16 +417,6 @@
   }
   var logoReadyPromise = preloadLogoForPDF();
 
-  // Perhitungan "keterangan" (ISTIMEWA/BAIK/MEMADAI/KURANG) dihitung dari
-  // NILAI RERATA sesi (rata-rata antar mapel, sesuai definisi backend:
-  // rerata = totalHitung / jumlahMapelValid di parseSesiSheet_() -> Code.gs),
-  // sesuai tabel kategori berikut (skala ratusan, ala TKA/UTBK):
-  //   >= 725 s.d 800  -> ISTIMEWA
-  //   601   s.d 724   -> BAIK
-  //   500   s.d 600   -> MEMADAI (rata-rata nasional TKA/UTBK umumnya ~500-550)
-  //   200   s.d 499   -> KURANG (juga fallback untuk nilai di bawah 200)
-  // Backend TIDAK mengirim string keterangan ini (menghemat ukuran JSON di
-  // skala puluhan ribu baris), jadi dihitung ulang di sini dari sesiObj.rerata.
   function hitungKeterangan(nilaiRerata) {
     var n = Number(nilaiRerata) || 0;
     if (n >= 725) return 'ISTIMEWA';
@@ -454,8 +438,6 @@
         SESI_LIST_GLOBAL = res.sesiList || [];
         TARGET_CABANG_NAME = res.targetCabang || "CABANG";
 
-        // Backend hanya mengirim data mentah (nilai per sesi). Hitung ranking &
-        // leaderboard sekarang, di browser, sekali saja setelah data selesai dimuat.
         buildAllRankings();
 
         CABANG_DATA = MASTER_DATA.filter(function(s) {
@@ -468,7 +450,6 @@
         setupSesiRankSelector();
         setupLeaderboardSelectors();
 
-        // Data benar-benar siap sekarang -> baru buka kunci kontrol.
         DATA_READY = true;
         var navBtn = document.getElementById('btnPapanPeringkatNasional');
         navBtn.disabled = false;
@@ -493,18 +474,11 @@
     return s.toString().trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
   }
 
-  // Sama seperti normalizeNama_ di backend, dipakai sebagai key peta ranking.
   function normalizeNamaJS(nama) {
     if (nama === null || nama === undefined) return '';
     return nama.toString().trim().toUpperCase().replace(/\s+/g, ' ');
   }
 
-  // ==========================================================
-  // PERHITUNGAN RANKING & LEADERBOARD (CLIENT-SIDE)
-  // Dulu ini dikerjakan oleh Google Apps Script untuk setiap request.
-  // Sekarang dijalankan sekali di browser setelah data mentah diterima,
-  // sehingga backend jauh lebih ringan & cepat.
-  // ==========================================================
   function buildAllRankings() {
     RANKING_NASIONAL = {};
     RANKING_CABANG = {};
@@ -515,10 +489,6 @@
     });
   }
 
-  // Menghitung peringkat "competition ranking" (nilai total sama = peringkat sama,
-  // peringkat berikutnya lompat sesuai jumlah peserta di atasnya) untuk satu sesi.
-  // filterCabang = null -> hitung nasional (semua siswa).
-  // filterCabang = "YOGYAKARTA-18" -> hitung hanya untuk siswa cabang tsb.
   function computeRankingSesi(sesiName, filterCabang) {
     var entries = [];
 
@@ -595,7 +565,6 @@
     renderCurrentList();
   }
 
-  // Menghitung nilai rata-rata seluruh peserta secara realtime berdasarkan sesi dan subtes
   function hitungRerataNasionalSubtes(sesiName) {
     var totalNilaiPerMapel = {};
     var jumlahPesertaPerMapel = {};
@@ -623,7 +592,7 @@
   }
 
   function renderCurrentList() {
-    if (!DATA_READY) return; // data belum ada -> jangan render apa-apa (biarkan spinner tampil)
+    if (!DATA_READY) return;
 
     var query = document.getElementById('searchInput').value.toLowerCase();
     var filtered = CABANG_DATA.filter(function(s) { return s.nama.toLowerCase().includes(query); });
@@ -753,7 +722,6 @@
     var contentDiv = document.getElementById('m-content-sesi');
     var html = '';
 
-    // Hapus sisa-sisa chart sesi lama
     sessionChartInstances = {};
 
     orderedSesiNames.forEach(function(sesiName) {
@@ -761,10 +729,8 @@
       var safeCollapseId = "collapse_" + sesiName.replace(/[^a-zA-Z0-9]/g, "");
       var canvasSesiId = "canvas_sesi_" + safeCollapseId;
 
-      // Ambil data rata-rata seluruh peserta untuk sesi ini
       var rerataNasionalMapel = hitungRerataNasionalSubtes(sesiName);
 
-      // Ranking dihitung/diambil dari peta hasil buildAllRankings() (client-side)
       var rankInfoNasional = getRankNasional(sesiName, siswa.nama);
       var rankInfoCabang = getRankCabang(sesiName, siswa.nama);
 
@@ -789,7 +755,6 @@
       chipsHtml += '<div class="score-chip highlight">RERATA <span class="val">' + Number(sesiObj.rerata).toFixed(1) + '</span></div>';
       chipsHtml += '<div class="score-chip highlight">TOTAL <span class="val">' + Number(sesiObj.total).toFixed(1) + '</span></div>';
 
-      // Membuat tabel baru yang terinspirasi dari image_d966ad.jpg dengan penambahan komparasi rata-rata seluruh peserta
       var subjectRowsFull = '';
       (sesiObj.subjects || []).forEach(function(s) {
         var namaKey = s.nama.trim().toUpperCase();
@@ -864,7 +829,6 @@
     new bootstrap.Modal(document.getElementById('detailModal')).show();
   }
 
-  // Membuat Bar Chart Komparasi per Sesi layaknya pada file image_d966ad.jpg
   function initSessionBarChart(collapseId, sesiName, index) {
     var canvasId = "canvas_sesi_" + collapseId;
     var canvasEl = document.getElementById(canvasId);
@@ -926,15 +890,25 @@
     var selectMapel = document.getElementById('chartMapelSelect');
     selectMapel.innerHTML = "";
 
-    var mapelSet = new Set();
-    for (var sesi in sesiData) {
-      (sesiData[sesi].subjects || []).forEach(function(m) { mapelSet.add(m.nama); });
-    }
-
     var optAll = document.createElement('option');
     optAll.value = "ALL";
     optAll.innerText = "📈 Tampilkan Rerata Seluruh Sesi";
     selectMapel.appendChild(optAll);
+
+    var optWajib = document.createElement('option');
+    optWajib.value = "WAJIB";
+    optWajib.innerText = "📌 Seluruh Mapel WAJIB";
+    selectMapel.appendChild(optWajib);
+
+    var optPilihan = document.createElement('option');
+    optPilihan.value = "PILIHAN";
+    optPilihan.innerText = "🎨 Seluruh Mapel PILIHAN";
+    selectMapel.appendChild(optPilihan);
+
+    var mapelSet = new Set();
+    for (var sesi in sesiData) {
+      (sesiData[sesi].subjects || []).forEach(function(m) { mapelSet.add(m.nama); });
+    }
 
     mapelSet.forEach(function(mapelName) {
       var opt = document.createElement('option');
@@ -949,6 +923,7 @@
   function updateChartView() {
     var selectedMapel = document.getElementById('chartMapelSelect').value;
     var reversedLabels = JSON.parse(JSON.stringify(currentSesiLabelsGlobal)).reverse();
+    var filteredLabels = [];
     var chartDataPoints = [];
     var activeColor = '#c1121f';
 
@@ -956,19 +931,51 @@
 
     reversedLabels.forEach(function(sesi) {
       var sesiObj = currentSesiDataGlobal[sesi] || { subjects: [], rerata: 0 };
+      var isPilihanSheet = sesi.toUpperCase().includes("PILIHAN");
+
       if (selectedMapel === "ALL") {
         var val = Number(sesiObj.rerata || 0);
-        chartDataPoints.push(val);
-        totalScoreSum += val; scoreCount++;
-        if (val > highestScore) highestScore = val;
-        if (val < lowestScore) lowestScore = val;
-        (sesiObj.subjects || []).forEach(function(m) { totalAllB += Number(m.benar || 0); });
+        if (val > 0) {
+          filteredLabels.push(sesi);
+          chartDataPoints.push(val);
+          totalScoreSum += val; scoreCount++;
+          if (val > highestScore) highestScore = val;
+          if (val < lowestScore) lowestScore = val;
+          (sesiObj.subjects || []).forEach(function(m) { totalAllB += Number(m.benar || 0); });
+        }
         activeColor = '#c1121f';
+      } else if (selectedMapel === "WAJIB") {
+        if (!isPilihanSheet) {
+          var val = Number(sesiObj.rerata || 0);
+          if (val > 0) {
+            filteredLabels.push(sesi);
+            chartDataPoints.push(val);
+            totalScoreSum += val; scoreCount++;
+            if (val > highestScore) highestScore = val;
+            if (val < lowestScore) lowestScore = val;
+            (sesiObj.subjects || []).forEach(function(m) { totalAllB += Number(m.benar || 0); });
+          }
+        }
+        activeColor = '#c1121f';
+      } else if (selectedMapel === "PILIHAN") {
+        if (isPilihanSheet) {
+          var val = Number(sesiObj.rerata || 0);
+          if (val > 0) {
+            filteredLabels.push(sesi);
+            chartDataPoints.push(val);
+            totalScoreSum += val; scoreCount++;
+            if (val > highestScore) highestScore = val;
+            if (val < lowestScore) lowestScore = val;
+            (sesiObj.subjects || []).forEach(function(m) { totalAllB += Number(m.benar || 0); });
+          }
+        }
+        activeColor = '#d4a017';
       } else {
         var foundMapel = (sesiObj.subjects || []).find(function(m) { return m.nama === selectedMapel; });
         var score = foundMapel ? Number(foundMapel.nilai || 0) : 0;
-        chartDataPoints.push(score);
-        if (foundMapel) {
+        if (score > 0) {
+          filteredLabels.push(sesi);
+          chartDataPoints.push(score);
           totalScoreSum += score; scoreCount++;
           totalAllB += Number(foundMapel.benar || 0);
           if (score > highestScore) highestScore = score;
@@ -995,10 +1002,10 @@
     globalChartInstance = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: reversedLabels,
+        labels: filteredLabels,
         datasets: [{
           data: chartDataPoints, borderColor: activeColor,
-          backgroundColor: selectedMapel === "ALL" ? 'rgba(193, 18, 31, 0.06)' : 'rgba(3, 105, 161, 0.06)',
+          backgroundColor: selectedMapel === "ALL" || selectedMapel === "WAJIB" ? 'rgba(193, 18, 31, 0.06)' : (selectedMapel === "PILIHAN" ? 'rgba(212, 160, 23, 0.06)' : 'rgba(3, 105, 161, 0.06)'),
           borderWidth: 2.5, pointRadius: 4, pointBackgroundColor: '#fff', pointBorderColor: activeColor, pointBorderWidth: 2, tension: 0.25, fill: true
         }]
       },
@@ -1028,8 +1035,6 @@
   }
 
   function openLeaderboardModal(sesiName, namaFokus) {
-    // Penjaga utama: tombol nav sudah disabled sampai DATA_READY, tapi ini
-    // jaga-jaga kalau fungsi ini dipanggil dari tempat lain sebelum data siap.
     if (!DATA_READY) {
       alert('Data masih dimuat, mohon tunggu beberapa detik lalu coba lagi.');
       return;
@@ -1048,7 +1053,6 @@
     var cabangMode = document.getElementById('lbCabangSelect').value;
     var query = document.getElementById('lbSearchInput').value.toLowerCase();
 
-    // Ambil leaderboard yang sudah dihitung di browser (lihat buildAllRankings/computeRankingSesi)
     var sourceObj = (cabangMode === 'TARGET') ? RANKING_CABANG[sesi] : RANKING_NASIONAL[sesi];
     var sourceArr = (sourceObj && sourceObj.list) ? sourceObj.list : [];
 
